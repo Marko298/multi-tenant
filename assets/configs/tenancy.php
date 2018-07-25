@@ -15,6 +15,8 @@
 use Hyn\Tenancy\Database\Connection;
 
 return [
+    'force_enable' => env('TENANCY_FORCE_ENABLE', false),
+
     'models' => [
         /**
          * Specify different models to be used for the global, system database

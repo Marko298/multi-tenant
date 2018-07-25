@@ -47,8 +47,8 @@ class Environment
 
     public function boot()
     {
-        if ($this->installed() &&
-            (! $this->app->runningInConsole() || $this->app->runningUnitTests()) &&
+        if (($this->forceEnabled() || $this->installed()) &&
+            (!$this->app->runningInConsole() || $this->app->runningUnitTests()) &&
             config('tenancy.hostname.auto-identification')) {
             $this->identifyHostname();
             // Identifies the current hostname, sets the binding using the native resolving strategy.
@@ -72,6 +72,11 @@ class Environment
         };
 
         return $this->installed ?? $this->installed = $isInstalled();
+    }
+
+    public function forceEnabled(): bool
+    {
+        return config('tenancy.force_enable');
     }
 
     public function identifyHostname()
