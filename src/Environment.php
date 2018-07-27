@@ -86,6 +86,8 @@ class Environment
         optional($hostname)->website ? $this->tenant($hostname->website) : null;
 
         $this->app->instance(CurrentHostname::class, $hostname);
+
+        return $hostname;
     }
 
     /**

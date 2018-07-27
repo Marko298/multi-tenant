@@ -56,9 +56,7 @@ class EnvironmentTest extends Test
 
         config(['tenancy.hostname.default' => $this->hostname->fqdn]);
 
-        $this->environment->identifyHostname();
-
-        $identified = $this->app->make(CurrentHostname::class);
+        $identified = $this->environment->identifyHostname();
 
         $this->assertEquals($this->hostname->fqdn, $identified->fqdn);
 
