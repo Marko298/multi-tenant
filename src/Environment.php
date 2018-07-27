@@ -81,14 +81,13 @@ class Environment
 
     public function identifyHostname()
     {
-        $this->app->singleton(CurrentHostname::class, function () {
-            /** @var Hostname $hostname */
-            $hostname = $this->dispatch(new HostnameIdentification());
 
-            optional($hostname)->website ? $this->tenant($hostname->website) : null;
+        /** @var Hostname $hostname */
+        $hostname = $this->dispatch(new HostnameIdentification());
 
-            return $hostname;
-        });
+        optional($hostname)->website ? $this->tenant($hostname->website) : null;
+
+        $this->app->instance(CurrentHostname::class, $hostname);
     }
 
     /**
