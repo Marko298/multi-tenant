@@ -83,9 +83,10 @@ class Environment
         /** @var Hostname $hostname */
         $hostname = $this->dispatch(new HostnameIdentification());
 
-        optional($hostname)->website ? $this->tenant($hostname->website) : null;
-
-        $this->app->instance(CurrentHostname::class, $hostname);
+        if($hostname) {
+            $hostname->website ? $this->tenant($hostname->website) : null;
+            $this->app->instance(CurrentHostname::class, $hostname);
+        }
 
         return $hostname;
     }
