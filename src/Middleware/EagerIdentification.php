@@ -22,9 +22,7 @@ class EagerIdentification
 {
     public function handle(Request $request, Closure $next)
     {
-        if (config('tenancy.hostname.early-identification')) {
-            app(Environment::class);
-        }
+        app(Environment::class)->boot();
 
         return $next($request);
     }

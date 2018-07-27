@@ -55,11 +55,11 @@ class HostnameActions
             ? app(CurrentHostname::class)
             : null;
 
-        if ($hostname != null) {
+        if ($hostname !== null) {
             $this->setAppUrl($request, $hostname);
 
             if ($hostname->under_maintenance_since) {
-                return $this->maintenance($hostname);
+                $this->maintenance($hostname);
             }
 
             if ($hostname->redirect_to) {

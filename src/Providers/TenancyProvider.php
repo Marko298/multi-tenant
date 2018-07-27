@@ -139,7 +139,17 @@ class TenancyProvider extends ServiceProvider
         /** @var Kernel|\Illuminate\Foundation\Http\Kernel $kernel */
         $kernel = $this->app->make(Kernel::class);
 
-        $kernel->prependMiddleware(Middleware\EagerIdentification::class);
-        $kernel->prependMiddleware(Middleware\HostnameActions::class);
+        $config               = config();
+        $eager_identification = $config->get('tenancy.hostname.early-identification');
+        $abort_without        = $config->get('tenancy.hostname.abort-without-identified-hostname');
+
+
+        if ($eager_identification) {
+            $kernel->prependMiddleware(Middleware\EagerIdentification::class);
+        }
+
+        if ($eager_identification || $abort_without) {
+            $kernel->prependMiddleware(Middleware\HostnameActions::class);
+        }
     }
 }
